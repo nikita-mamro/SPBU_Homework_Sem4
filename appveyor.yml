@@ -11,4 +11,4 @@ build_script:
   - msbuild %solution_path%
 
 test_script:
-  - dotnet test --test-adapter-path:. --logger:Appveyor Factorial.Tests\Factorial.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Factorial.Tests\Factorial.Tests.fsproj
