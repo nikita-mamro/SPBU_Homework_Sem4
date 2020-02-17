@@ -12,6 +12,6 @@ let FactorialTest (input, expected) =
     Assert.AreEqual(Some(expected), factorial input)
 
 [<TestCase (-1)>]
-[<TestCase (-1000000)>]
+[<TestCase (-10000000)>]
 let FactorialNoneTest (input) = 
     Assert.AreEqual(None, factorial input)
