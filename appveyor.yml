@@ -2,7 +2,6 @@ image: Visual Studio 2019
 
 environment:
   matrix:
-  - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
   - solution_path: Lab1\Task1\Factorial\Factorial.sln
   - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
   - solution_path: Lab1\Task3\ReverseList\ReverseList.sln
