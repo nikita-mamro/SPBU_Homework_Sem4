@@ -2,8 +2,9 @@ image: Visual Studio 2019
 
 environment:
   matrix:
-  - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
   - solution_path: Lab1\Task1\Factorial\Factorial.sln
+  - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
+  - solution_path: Lab1\Task5\FirstEntry\FirstEntry.sln
 
 before_build:
  - nuget restore %solution_path%
@@ -14,3 +15,4 @@ build_script:
 test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task1\Factorial.Tests\Factorial.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task2\Fibonacci.Tests\Fibonacci.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task5\FirstEntry.Tests\FirstEntry.Tests.fsproj
