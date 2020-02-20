@@ -15,4 +15,4 @@ build_script:
 test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task1\Factorial.Tests\Factorial.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task2\Fibonacci.Tests\Fibonacci.Tests.fsproj
-  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task3\CreateList.Tests\CreateList.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task4\CreateList.Tests\CreateList.Tests.fsproj
