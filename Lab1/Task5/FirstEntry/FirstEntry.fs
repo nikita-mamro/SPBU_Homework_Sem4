@@ -1,12 +1,12 @@
 ﻿module FirstEntry
 
 let firstEntry x list =
-    let rec firstEntryRecursive x list acc = 
+    let rec firstEntryRecursive list acc = 
         match list with
         | head :: tail ->
                 if head = x then
                     Some(acc)
                 else 
-                    firstEntryRecursive x tail (acc + 1)
+                    firstEntryRecursive tail (acc + 1)
         | [] -> None
-    firstEntryRecursive x list 0
+    firstEntryRecursive list 0
