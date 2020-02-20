@@ -3,7 +3,7 @@ module ReverseList.Tests
 open NUnit.Framework
 open ReverseList
 
-let sourceLists =
+let sourceLists () =
     [
         [], []
         [1], [1]
