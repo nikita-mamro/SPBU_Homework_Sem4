@@ -5,8 +5,7 @@ let createList n m =
         match m with
         | 0 -> 1
         | 1 -> n
-        | 2 -> n * n
-        | _ -> (power n (m / 2)) * (power n (m / 2)) * (power n (m % 2))
+        | _ -> n * power n (m - 1)
 
     let rec createRecursive list n m =
         if m = -1 then
