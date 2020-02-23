@@ -5,6 +5,7 @@ environment:
   - solution_path: Lab1\Task1\Factorial\Factorial.sln
   - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
   - solution_path: Lab1\Task3\ReverseList\ReverseList.sln
+  - solution_path: Lab1\Task4\CreateList\CreateList.sln
   - solution_path: Lab1\Task5\FirstEntry\FirstEntry.sln
 
 before_build:
@@ -17,4 +18,5 @@ test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task1\Factorial.Tests\Factorial.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task2\Fibonacci.Tests\Fibonacci.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task3\ReverseList.Tests\ReverseList.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task4\CreateList.Tests\CreateList.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task5\FirstEntry.Tests\FirstEntry.Tests.fsproj
