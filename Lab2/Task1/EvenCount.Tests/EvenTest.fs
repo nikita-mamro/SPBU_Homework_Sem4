@@ -1,6 +1,7 @@
 module EvenCount.Tests
 
 open NUnit.Framework
+open FsCheck.NUnit
 open EvenCount
 
 let testData () = 
@@ -30,3 +31,10 @@ let FilterEvenCountTest (list, expected) =
 [<TestCaseSource("testData")>]
 let FoldEvenCountTest (list, expected) = 
     Assert.AreEqual(expected, evenCountFold list)
+
+[<Property>]
+let ``All implementations should return same value`` (xs:list<int>) = 
+    let foldRes = evenCountFold xs
+    let mapRes = evenCountMap xs
+    let filterRes = evenCountFilter xs
+    foldRes = mapRes && mapRes = filterRes
