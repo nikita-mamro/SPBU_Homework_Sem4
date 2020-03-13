@@ -1,18 +1,16 @@
 ﻿module Interpreter
 
-type VariablesSet = char
-
 type LambdaTerm =
-    | Variable of VariablesSet
+    | Variable of char
     | Application of LambdaTerm * LambdaTerm
-    | Abstraction of VariablesSet * LambdaTerm
+    | Abstraction of char * LambdaTerm
 
     override this.ToString() = 
         match this with
         | Variable name ->
             name.ToString()
         | Application (f, arg) ->
-            ["("; f.ToString(); " "; arg.ToString(); ")"] |> Seq.fold (+) ""
+            ["("; f.ToString(); ") ("; arg.ToString(); ")"] |> Seq.fold (+) ""
         | Abstraction (parameter, body) ->
             ["Л"; parameter.ToString(); "."; body.ToString()] |> Seq.fold (+) ""
 
@@ -59,7 +57,21 @@ let alphaConvert oldName newName term =
         Abstraction(newName, convert oldName newName body)
     | _ -> failwith "Error: Only abstraction can be alpha converted"
         
-let rec substitute arg parameter body = 
+let rec substitute arg parameter body =
+
+    let rec variables term =
+        seq {
+            match term with
+            |Variable name ->
+                yield name
+            |Application (f, arg) ->
+                yield! variables f
+                yield! variables arg
+            |Abstraction (parameter, body) ->
+                yield parameter
+                yield! variables body
+        }
+
     match body with
     | Variable name->
         if name = parameter then arg else body
@@ -69,14 +81,29 @@ let rec substitute arg parameter body =
         if parameter' = parameter then 
             body
         elif occursFree parameter' arg then
-            // todo
-            alphaConvert parameter' 'Ы' body'
+            let currentVariables = variables body
+            let alphabet = seq {'a' .. 'z'}
+            
+            let c = alphabet |> Seq.filter(fun x -> not (Seq.contains x currentVariables)) |> Seq.tryHead
+
+            if c = None then
+                failwithf "Error: unable to proceed beta reduction"
+
+            //let x = alphaConvert parameter' c.Value body
+            //
+            //printfn "%A" <| x
+
+            substitute arg parameter (alphaConvert parameter' c.Value body)
         else
             Abstraction (parameter', substitute arg parameter body')
 
 let betaReduction = function
     | Application (Abstraction (parameter, body), arg) ->
         substitute arg parameter body
-    | expression -> failwithf "Error: %A is not a beta redex" expression
+    | expression -> failwithf "Error: %A is not a redex" expression
 
-printfn "%A" <| (betaReduction (Application(Abstraction('x', Variable('x')), Abstraction('x', Variable('x'))))).ToString()
+//printfn "%A" <| (betaReduction (Application(Abstraction('x', Variable('x')), Abstraction('x', Variable('x'))))).ToString()
+
+printfn "%A" <| ((Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
+
+printfn "%A" <| (betaReduction (Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
