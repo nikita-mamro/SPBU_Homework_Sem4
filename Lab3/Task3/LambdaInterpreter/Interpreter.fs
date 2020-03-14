@@ -1,5 +1,6 @@
 ﻿module Interpreter
 
+// Type describing lambda term
 type LambdaTerm =
     | Variable of char
     | Application of LambdaTerm * LambdaTerm
@@ -12,8 +13,9 @@ type LambdaTerm =
         | Application (f, arg) ->
             ["("; f.ToString(); ") ("; arg.ToString(); ")"] |> Seq.fold (+) ""
         | Abstraction (parameter, body) ->
-            ["Л"; parameter.ToString(); "."; body.ToString()] |> Seq.fold (+) ""
+            ["Л"; parameter.ToString(); ".("; body.ToString(); ")"] |> Seq.fold (+) ""
 
+// Checks if there's such name in the term
 let rec occurs name = function
     | Variable varName -> 
         varName = name
@@ -22,6 +24,7 @@ let rec occurs name = function
     | Abstraction (parameter, body) ->
         name = parameter || occurs name body
 
+// Checks if name is a free variable in the term
 let rec occursFree name = function
     | Variable varName ->
         varName = name
@@ -30,6 +33,7 @@ let rec occursFree name = function
     | Abstraction (parameter, body) ->
         name <> parameter && occursFree name body
 
+// Executes alpha convertion for a term
 let alphaConvert oldName newName term =
 
     let rec convert oldName newName expression =
@@ -57,6 +61,7 @@ let alphaConvert oldName newName term =
         Abstraction(newName, convert oldName newName body)
     | _ -> failwith "Error: Only abstraction can be alpha converted"
         
+// Executes substitution of argument into body
 let rec substitute arg parameter body =
 
     let rec variables term =
@@ -76,7 +81,7 @@ let rec substitute arg parameter body =
     | Variable name->
         if name = parameter then arg else body
     | Application (f, arg')->
-         Application (substitute arg parameter f, substitute arg parameter arg')
+         (Application (substitute arg parameter f, substitute arg parameter arg'))
     | Abstraction (parameter', body') -> 
         if parameter' = parameter then 
             body
@@ -89,21 +94,24 @@ let rec substitute arg parameter body =
             if c = None then
                 failwithf "Error: unable to proceed beta reduction"
 
-            //let x = alphaConvert parameter' c.Value body
-            //
-            //printfn "%A" <| x
-
             substitute arg parameter (alphaConvert parameter' c.Value body)
         else
             Abstraction (parameter', substitute arg parameter body')
 
-let betaReduction = function
+// Executes beta reduction step if term is redex, throws exception if not
+let rec betaReduction = function
     | Application (Abstraction (parameter, body), arg) ->
         substitute arg parameter body
-    | expression -> failwithf "Error: %A is not a redex" expression
+    | expression -> failwithf "Error: %A is not a beta redex" expression
 
 //printfn "%A" <| (betaReduction (Application(Abstraction('x', Variable('x')), Abstraction('x', Variable('x'))))).ToString()
 
-printfn "%A" <| ((Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
+//printfn "%A" <| ((Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
+//
+//printfn "%A" <| (betaReduction (Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
 
-printfn "%A" <| (betaReduction (Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
+//printfn "%A" <| (betaReduction (Application(Abstraction('x', Application(Variable('a'), Variable('x'))), Variable('b')))).ToString()
+
+//printfn "%A" <| (betaReduction (Application(Abstraction('c', Application(Variable('c'), Variable('b'))), Abstraction('a', Variable('a'))))).ToString()
+
+//printfn "%A" <| (betaReduction (Application(Abstraction('a', Application(Variable('a'), Variable('x'))), Abstraction('x', Application(Variable('x'), Variable('a')))))).ToString()
