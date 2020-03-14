@@ -53,13 +53,13 @@ let alphaConvert oldName newName term =
                 Abstraction(parameter, convert oldName newName body)
 
     if (occursFree newName term) then
-        failwithf "Error: New name %c occurs free in term" newName
+        invalidArg "newName" "Error: New name occurs free in term"
     match term with
     | Abstraction(parameter, body) ->
         if oldName <> parameter then
-            failwithf "Error: Old name %c does not exist" oldName
+            invalidArg "oldName" "Error: Old name does not exist"
         Abstraction(newName, convert oldName newName body)
-    | _ -> failwith "Error: Only abstraction can be alpha converted"
+    | _ -> invalidArg "term" "Error: Only abstraction can be alpha converted"
         
 // Executes substitution of argument into body
 let rec substitute arg parameter body =
@@ -90,7 +90,6 @@ let rec substitute arg parameter body =
             let alphabet = seq {'a' .. 'z'}
             
             let c = alphabet |> Seq.filter(fun x -> not (Seq.contains x currentVariables)) |> Seq.tryHead
-
             if c = None then
                 failwithf "Error: unable to proceed beta reduction"
 
@@ -102,16 +101,4 @@ let rec substitute arg parameter body =
 let rec betaReduction = function
     | Application (Abstraction (parameter, body), arg) ->
         substitute arg parameter body
-    | expression -> failwithf "Error: %A is not a beta redex" expression
-
-//printfn "%A" <| (betaReduction (Application(Abstraction('x', Variable('x')), Abstraction('x', Variable('x'))))).ToString()
-
-//printfn "%A" <| ((Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
-//
-//printfn "%A" <| (betaReduction (Application(Abstraction('x', Abstraction('y', Application(Variable('x'), Variable('y')))), Abstraction('a', Application(Variable('a'), Variable('y')))))).ToString()
-
-//printfn "%A" <| (betaReduction (Application(Abstraction('x', Application(Variable('a'), Variable('x'))), Variable('b')))).ToString()
-
-//printfn "%A" <| (betaReduction (Application(Abstraction('c', Application(Variable('c'), Variable('b'))), Abstraction('a', Variable('a'))))).ToString()
-
-//printfn "%A" <| (betaReduction (Application(Abstraction('a', Application(Variable('a'), Variable('x'))), Abstraction('x', Application(Variable('x'), Variable('a')))))).ToString()
+    | _ -> invalidArg "expression" "Error: expression is not a beta redex"
