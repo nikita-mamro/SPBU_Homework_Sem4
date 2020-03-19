@@ -14,7 +14,7 @@ let testFunc'4: int -> int list -> int list =
 //    List.map << (*)
 
 [<Property>]
-let PointFreeTest (x:int, xs:list<int>) =
+let ``Functions from converting into point-free procedure should be equal`` (x:int, xs:list<int>) =
     let res = func x xs
     let res'1 = func'1 x xs
     let res'2 = func'2 x xs
@@ -28,4 +28,4 @@ let PointFreeTest (x:int, xs:list<int>) =
     res'3 = res'4
 
 [<Test>]
-Check.Quick PointFreeTest
+Check.Quick ``Functions from converting into point-free procedure should be equal``
