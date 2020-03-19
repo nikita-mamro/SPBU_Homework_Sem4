@@ -1,7 +1,7 @@
 ﻿module PointFree
 
-// Procedure of getting function
-// in point-free style
+// Procedure of turning function
+// into function in point-free style
 let func x l = List.map (fun y -> y * x) l
 
 let func'1 x: int list -> int list =
