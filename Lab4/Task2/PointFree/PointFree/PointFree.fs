@@ -1,6 +1,6 @@
 ﻿module PointFree
 
-// Procedure of turning function
+// Steps of procedure of turning function
 // into function in point-free style
 let func x l = List.map (fun y -> y * x) l
 
