@@ -58,7 +58,7 @@ let findName (phone : string) seq storagePath =
     |> Seq.append seq
     |> Seq.filter (fun x -> ((snd x).ToLower().Contains phone))
 
-// Console UI support for findPhone()
+// Console UI support for findName()
 let findAndPrintName phone seq storagePath =
     let searchResults = findName phone seq storagePath
 
