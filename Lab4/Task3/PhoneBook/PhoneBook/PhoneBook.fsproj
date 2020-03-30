@@ -6,16 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Source\PhoneBook.fs" />
-    <Compile Include="Source\GUI.fs" />
-    <Compile Include="Source\Utils\Printer.fs" />
-    <Compile Include="Source\Utils\RecordParser.fs" />
-    <Compile Include="Source\Utils\FileIO.fs" />
+    <Compile Include="Source\Printer.fs" />
+    <Compile Include="Source\RecordParser.fs" />
+    <Compile Include="Source\Phonebook.fs" />
+    <Compile Include="UI.fs" />
     <Compile Include="Program.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Storage\" />
   </ItemGroup>
 
 </Project>

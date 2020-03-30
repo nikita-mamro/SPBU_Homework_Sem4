@@ -1,3 +1,3 @@
-﻿module Program
+﻿open UI
 
-open GUI
+initializeUI()

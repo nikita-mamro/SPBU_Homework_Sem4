@@ -7,17 +7,17 @@ let parse (expression : string) =
     | h :: t ->
         h.ToString() + " " + listToString t
     | [] ->
-        ""
+        invalidArg "list" "Список не подходит по формату"
 
     let listToPair = function
         | h :: t ->
             (listToString t, h)
         | [] ->
-            invalidArg "list" "List is not convertable to pair"
+            invalidArg "list" "Список не подходит по формату"
     try
         expression.Split ' '
         |> Seq.toList
         |> listToPair
         |> Some
     with
-        | ex -> printfn "Expression can't be parsed"; None
+        | ex -> printfn "Выражение не подходит по формату"; None
