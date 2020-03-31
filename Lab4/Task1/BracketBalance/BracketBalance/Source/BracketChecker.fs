@@ -6,7 +6,7 @@ open Stack
 let checkGeneric (opening, closing, equals) =
 
     let rec checkCharListRec (stack : CharStack) = function
-        | [] -> 
+        | [] ->
             stack.EmptyCheck
         | h :: t ->
             if (equals h opening) then

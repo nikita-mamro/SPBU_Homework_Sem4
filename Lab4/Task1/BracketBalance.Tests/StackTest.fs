@@ -12,9 +12,9 @@ let multiplePushCases () =
     ] |> Seq.map (fun (elements) -> TestCaseData(elements))
 
 // Checks if stacks are equal
-let stacksAreEqual s1 s2 = 
+let stacksAreEqual s1 s2 =
     match (s1, s2) with
-    | (Empty, Empty) -> 
+    | (Empty, Empty) ->
         true
     | (Stack(e1, stack1), Stack(e2, stack2)) when e1 = e2 ->
         stack1 = stack2

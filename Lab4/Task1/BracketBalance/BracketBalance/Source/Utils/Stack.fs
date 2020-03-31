@@ -4,7 +4,7 @@
 type CharStack =
     | Stack of char * CharStack
     | Empty
-    
+
     // Returns a stack after pushing an element
     member s.Push e = Stack(e, s)
 
@@ -21,7 +21,7 @@ type CharStack =
         | Empty -> invalidOp "Pop() error: Stack is empty"
 
     // Checks if stack is empty
-    member s.EmptyCheck = 
+    member s.EmptyCheck =
         match s with
         | Empty -> true
         | _ -> false
