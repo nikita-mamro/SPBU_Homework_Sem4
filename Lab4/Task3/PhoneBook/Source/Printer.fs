@@ -3,7 +3,7 @@
 // Prints formatted records
 let print fileRecords bufferRecords =
     let printRecord = function
-        | (name, number) -> printfn "%A - %A" name number
+        (name, number) -> printfn "%A - %A" name number
 
     printfn "\nФормат вывода: Имя - Номер"
     printfn "\nДанные из файла:\n"
