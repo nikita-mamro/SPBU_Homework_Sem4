@@ -19,17 +19,12 @@ let records ()= seq {
 
 [<SetUp>]
 let Setup () =
-    File.Create(storagePath()).Close()
     File.WriteAllLines(storagePath(), seq {
         yield "202-555-0163 Angel Estrada"
         yield "202-555-0119 Justin Guzman"
         yield "202-555-0131 Grady Welch"
         yield "202-555-0195 Jeannie Robertson"
     })
-
-[<TearDown>]
-let TearDown () =
-    File.Delete(storagePath())
 
 [<Test>]
 let ``Reading from file should be correct`` () =
