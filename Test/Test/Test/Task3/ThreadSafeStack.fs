@@ -12,7 +12,7 @@ type Stack<'a> =
     | Empty
 
     member s.Push e =
-        lock monitor (fun() -> Some(Stack(e, s)))
+        lock monitor (fun() -> Stack(e, s))
 
     member s.TryPop =
         let pop stack =
