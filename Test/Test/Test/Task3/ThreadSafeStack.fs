@@ -15,8 +15,7 @@ type Stack<'a> =
         lock monitor (fun() -> Stack(e, s))
 
     member s.TryPop =
-        let pop stack =
-            match stack with
+        lock monitor (fun() ->
+            match s with
             | Stack(e, _) -> Some(e)
-            | Empty -> None
-        lock monitor (fun() -> pop s)
+            | Empty -> None)
