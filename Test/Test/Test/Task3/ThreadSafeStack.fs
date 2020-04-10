@@ -17,6 +17,6 @@ type Stack<'a> =
     member s.TryPop =
         let pop stack =
             match stack with
-            | Stack(e, stack) -> Some(stack)
+            | Stack(e, _) -> Some(e)
             | Empty -> None
         lock monitor (fun() -> pop s)
