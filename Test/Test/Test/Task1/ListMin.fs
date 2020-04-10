@@ -4,14 +4,9 @@
 //Найти наименьший элемент в списке, не используя рекурсию и List.min.
 //Конструкции императивного программирования использовать нельзя.
 
-let min = function
-    | [] -> failwith "Empty list"
-    | head :: tail ->
-        let rec recMin currentMin = function
-            | [] -> currentMin
-            | h :: t ->
-                if h < currentMin then
-                    recMin h t
-                else
-                    recMin currentMin t
-        recMin head tail
+let min list =
+    match list with
+    | [] ->
+        failwith "Empty list"
+    | h :: t ->
+        List.fold (fun x y -> if x < y then x else y) h list

@@ -43,5 +43,3 @@ let printSquare n =
         | _ ->
             printfn
     printSquareRec (getSquare n)
-
-printSquare 3 |> ignore
