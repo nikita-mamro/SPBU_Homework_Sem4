@@ -23,7 +23,7 @@ let stacksAreEqual s1 s2 =
 // Tests for CharStack
 [<Test>]
 let ``Single push should not return empty stack`` () =
-    (Empty.Push 'x').EmptyCheck |> should equal false
+    (Empty.Push 'x') = Empty |> should equal false
 
 [<Test>]
 let ``Single push should return expected stack`` () =
@@ -35,7 +35,7 @@ let ``Multiple push should not return empty stack`` (elements) =
         | h :: t ->
             pushAll (s.Push h) t
         | _ -> s
-    (pushAll Empty elements).EmptyCheck |> should equal false
+    (pushAll Empty elements) = Empty |> should equal false
 
 [<Test>]
 let ``Multiple push should return expected`` () =
@@ -51,7 +51,7 @@ let ``Top should throw exception when stack is empty`` () =
 
 [<Test>]
 let ``Single element Pop test`` () =
-    (Stack('x', Empty).Pop).EmptyCheck |> should equal true
+    (Stack('x', Empty).Pop) = Empty |> should equal true
 
 [<Test>]
 let ``Multiple elements Pop test`` () =

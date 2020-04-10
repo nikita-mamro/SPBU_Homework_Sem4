@@ -19,9 +19,3 @@ type CharStack =
         match s with
         | Stack(e, stack) -> stack
         | Empty -> invalidOp "Pop() error: Stack is empty"
-
-    // Checks if stack is empty
-    member s.EmptyCheck =
-        match s with
-        | Empty -> true
-        | _ -> false
