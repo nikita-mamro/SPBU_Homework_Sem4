@@ -6,14 +6,14 @@ open FsUnit
 open System.Threading
 
 [<Test>]
-let ``Single thread single enqueue should work as expected`` =
+let ``Single thread single enqueue should work as expected`` () =
     let queue = BlockingQueue<int>()
     queue.Enqueue 0
     queue.Count() |> should equal 1
     queue.Dequeue() |> should equal 0
 
 [<Test>]
-let ``Single thread multiple enqueue should work as expected`` =
+let ``Single thread multiple enqueue should work as expected`` () =
     let queue = BlockingQueue<int>()
     queue.Enqueue -1
     queue.Enqueue 0
@@ -25,7 +25,7 @@ let ``Single thread multiple enqueue should work as expected`` =
     queue.Count() |> should equal 0
 
 [<Test>]
-let ``Multi-thread enqueue should work as expected`` =
+let ``Multi-thread enqueue should work as expected`` () =
     let queue = BlockingQueue<int>()
     let threadA = Thread(fun () -> queue.Enqueue 1)
     let threadB = Thread(fun () -> queue.Enqueue 2)
@@ -35,7 +35,7 @@ let ``Multi-thread enqueue should work as expected`` =
     queue.Count() |> should equal 2
 
 [<Test>]
-let ``Multi-thread dequeue should work as expected`` =
+let ``Multi-thread dequeue should work as expected`` () =
     let mutable x = 0
     let queue = BlockingQueue<int>()
 
