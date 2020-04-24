@@ -9,8 +9,8 @@ open System.Threading
 let ``Single thread single enqueue should work as expected`` =
     let queue = BlockingQueue<int>()
     queue.Enqueue 0
-    queue.Count |> should equal 1
-    queue.Dequeue |> should equal 0
+    queue.Count() |> should equal 1
+    queue.Dequeue() |> should equal 0
 
 [<Test>]
 let ``Single thread multiple enqueue should work as expected`` =
@@ -18,11 +18,11 @@ let ``Single thread multiple enqueue should work as expected`` =
     queue.Enqueue -1
     queue.Enqueue 0
     queue.Enqueue 1
-    queue.Count |> should equal 3
-    queue.Dequeue |> should equal -1
-    queue.Dequeue |> should equal 0
-    queue.Dequeue |> should equal 1
-    queue.Count |> should equal 3
+    queue.Count() |> should equal 3
+    queue.Dequeue() |> should equal -1
+    queue.Dequeue() |> should equal 0
+    queue.Dequeue() |> should equal 1
+    queue.Count() |> should equal 0
 
 [<Test>]
 let ``Multi-thread enqueue should work as expected`` =
@@ -31,7 +31,8 @@ let ``Multi-thread enqueue should work as expected`` =
     let threadB = Thread(fun () -> queue.Enqueue 2)
     threadA.Start()
     threadB.Start()
-    queue.Count |> should equal 2
+    Thread.Sleep(1000)
+    queue.Count() |> should equal 2
 
 [<Test>]
 let ``Multi-thread dequeue should work as expected`` =
