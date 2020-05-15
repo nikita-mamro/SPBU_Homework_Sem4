@@ -1,6 +1,8 @@
 module PriorityQueue.Tests
 
 open NUnit.Framework
+open FsUnit
+
 
 [<SetUp>]
 let Setup () =
