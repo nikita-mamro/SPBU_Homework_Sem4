@@ -11,7 +11,7 @@ type PriorityQueue<'a>() =
         let rec insert before after =
             match after with
             | [] ->
-                [(value, priority)]
+                before @ [(value, priority)]
             | (v, p) :: t ->
                 if p < priority then
                     before @ [(value, priority)] @ after
