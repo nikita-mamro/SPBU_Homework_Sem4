@@ -1,5 +1,6 @@
 module PriorityQueue.Tests
 
+open System
 open NUnit.Framework
 open FsUnit
 open PriorityQueue
@@ -47,6 +48,10 @@ let ``Count after multiple enqueue and dequeue should be correct`` () =
 let ``Dequeue from single-item queue should return correct value`` () =
     queue.Enq 3 1
     queue.Deq() |> should equal 3
+
+[<Test>]
+let ``Dequeue from empty queue should throw exception`` () =
+    (fun () -> queue.Deq() |> ignore) |> should throw typeof<InvalidOperationException>
 
 [<Test>]
 let ``Enqueue for items with same priority should work properly`` () =
