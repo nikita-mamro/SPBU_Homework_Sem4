@@ -7,7 +7,7 @@ type PriorityQueue<'a>() =
     let mutable list = []
 
     /// Enqueues item with given priority
-    member this.Enq value priority =
+    member this.Enq (value : 'a) priority =
         let rec insert before after =
             match after with
             | [] ->
@@ -17,6 +17,7 @@ type PriorityQueue<'a>() =
                     before @ [(value, priority)] @ after
                 else
                     insert (before @ [(v, p)]) t
+
         list <- insert [] list
 
     /// Dequeues item with highest priority
