@@ -4,7 +4,7 @@
 /// Stores pairs (value, priority)
 type PriorityQueue<'a>() =
     /// List of stored pairs
-    let mutable list = []
+    let mutable items = []
 
     /// Enqueues item with given priority
     member this.Enq (value : 'a) priority =
@@ -18,15 +18,15 @@ type PriorityQueue<'a>() =
                 else
                     insert (before @ [(v, p)]) t
 
-        list <- insert [] list
+        items <- insert [] items
 
     /// Dequeues item with highest priority
     member this.Deq () =
-        match list with
+        match items with
         | [] ->
             invalidOp("Can't dequeue from empty queue.")
         | h :: t ->
-            list <- t
+            items <- t
             fst h
 
-    member this.Count = list.Length
+    member this.Count = items.Length
