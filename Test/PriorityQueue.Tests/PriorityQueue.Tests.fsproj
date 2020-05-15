@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
+    <PackageReference Include="FsUnit" Version="3.8.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
@@ -16,6 +17,10 @@
 
   <ItemGroup>
     <Compile Include="PriorityQueueTest.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PriorityQueue\PriorityQueue.fsproj" />
   </ItemGroup>
 
 </Project>

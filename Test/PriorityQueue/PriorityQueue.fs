@@ -13,10 +13,10 @@ type PriorityQueue<'a>() =
             | [] ->
                 [(value, priority)]
             | (v, p) :: t ->
-                if p > priority then
-                    insert (before @ [(v, p)]) after
-                else
+                if p < priority then
                     before @ [(value, priority)] @ after
+                else
+                    insert (before @ [(v, p)]) t
         list <- insert [] list
 
     /// Dequeues item with highest priority
@@ -26,6 +26,6 @@ type PriorityQueue<'a>() =
             invalidOp("Can't dequeue from empty queue.")
         | h :: t ->
             list <- t
-            h
+            fst h
 
     member this.Count = list.Length
