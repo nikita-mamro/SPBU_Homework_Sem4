@@ -11,8 +11,9 @@ environment:
   - solution_path: Lab2\Task2\BTreeMap\BTreeMap.sln
   - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln
   - solution_path: Lab2\Task3\ExpressionTree\ExpressionTree.sln
-  - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln\
+  - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln
   - solution_path: Lab4\Task2\PointFree\PointFree.sln
+  - solution_path: Lab4\Task3\PhoneBook\PhoneBook.sln
   - solution_path: Test\PriorityQueue\PriorityQueue.sln
 
 before_build:
@@ -33,4 +34,5 @@ test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task3\ExpressionTree.Tests\ExpressionTree.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task4\PrimeSequence.Tests\PrimeSequence.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task2\PointFree.Tests\PointFree.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task3\PhoneBook.Tests\PhoneBook.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Test\PriorityQueue.Tests\PriorityQueue.Tests.fsproj
