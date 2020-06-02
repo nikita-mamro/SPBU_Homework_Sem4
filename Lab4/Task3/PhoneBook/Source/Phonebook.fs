@@ -32,13 +32,13 @@ let getSavedRecords storagePath =
 
 // Searches all the data
 // for a phone / phones by a given name
-let findPhone (name : string) seq storagePath=
+let findPhone (name : string) seq storagePath =
     getSavedRecords storagePath
     |> Seq.append seq
     |> Seq.filter (fun x -> ((fst x).ToLower().Contains (name.ToLower())))
 
 // Console UI support for findPhone()
-let findAndPrintPhone name seq storagePath=
+let findAndPrintPhone name seq storagePath =
     let searchResults = findPhone name seq storagePath
 
     if Seq.isEmpty searchResults then
