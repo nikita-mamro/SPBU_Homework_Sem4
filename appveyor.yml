@@ -9,8 +9,10 @@ environment:
   - solution_path: Lab1\Task5\FirstEntry\FirstEntry.sln
   - solution_path: Lab2\Task1\EvenCount\EvenCount.sln
   - solution_path: Lab2\Task2\BTreeMap\BTreeMap.sln
+  - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln
   - solution_path: Lab2\Task3\ExpressionTree\ExpressionTree.sln
   - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln\
+  - solution_path: Lab4\Task2\PointFree\PointFree.sln
 
 before_build:
  - nuget restore %solution_path%
@@ -26,5 +28,7 @@ test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task5\FirstEntry.Tests\FirstEntry.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task1\EvenCount.Tests\EvenCount.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task2\BTreeMap.Tests\BTreeMap.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task4\PrimeSequence.Tests\PrimeSequence.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task3\ExpressionTree.Tests\ExpressionTree.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task4\PrimeSequence.Tests\PrimeSequence.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task2\PointFree.Tests\PointFree.Tests.fsproj
