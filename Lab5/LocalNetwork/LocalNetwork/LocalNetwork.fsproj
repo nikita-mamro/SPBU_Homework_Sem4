@@ -6,9 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Utils\Computer.fs" />
-    <Compile Include="Utils\OperationSystem.fs" />
+    <Compile Include="Interfaces\IOperatingSystem.fs" />
+    <Compile Include="Models\OperatingSystem.fs" />
+    <Compile Include="Models\Computer.fs" />
     <Compile Include="LocalNetwork.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
 
 </Project>
