@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WorkflowStringCalculator", "WorkflowStringCalculator.fsproj", "{1D57CBB7-3502-4BBB-8FA6-262DEABA3222}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WorkflowStringCalculator.Tests", "..\WorkflowStringCalculator.Tests\WorkflowStringCalculator.Tests.fsproj", "{D7CD034C-17A4-4CCA-B640-E8DCA1ECDB91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D57CBB7-3502-4BBB-8FA6-262DEABA3222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D57CBB7-3502-4BBB-8FA6-262DEABA3222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D57CBB7-3502-4BBB-8FA6-262DEABA3222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D57CBB7-3502-4BBB-8FA6-262DEABA3222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7CD034C-17A4-4CCA-B640-E8DCA1ECDB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CD034C-17A4-4CCA-B640-E8DCA1ECDB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CD034C-17A4-4CCA-B640-E8DCA1ECDB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CD034C-17A4-4CCA-B640-E8DCA1ECDB91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA44BFB5-4985-49F4-A980-3BF6BEAF0802}
+	EndGlobalSection
+EndGlobal
