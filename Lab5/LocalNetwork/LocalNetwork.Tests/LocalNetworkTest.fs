@@ -13,9 +13,6 @@ let invurnelableOS () = OS(0.0)
 
 let overvulnerableOS () = OS(1.0)
 
-/// Will use this just for tests
-let getBoolMatrix (m : list<list<int>>) = m |> List.map (fun list -> (list |> List.map (fun x -> Convert.ToBoolean(x))))
-
 let overvulnerableComputers () =
     [
         [
