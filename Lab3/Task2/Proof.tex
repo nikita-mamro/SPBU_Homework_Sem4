@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\thispagestyle{empty}
+
+\begin{document}
+
+    (!) S K K = I\\
+    
+    Proof:\\
+    
+    I $\equiv$ $\lambda$x.x
+    
+    S $\equiv$ $\lambda$x y z.x z (y z)
+    
+    K $\equiv$ $\lambda$x y.x\\
+
+    S K K $\equiv$ ($\lambda$x y z.x z (y z)) ($\lambda$x y.x) ($\lambda$x y.x)
+    
+    $\rightarrow_{\beta}$ ($\lambda$y z.($\lambda$x y.x) z (y z)) ($\lambda$x y.x)
+    
+    $\rightarrow_{\beta}$ ($\lambda$y z.($\lambda$y.z) (y z)) ($\lambda$x y.x)
+    
+    $\rightarrow_{\beta}$ ($\lambda$z.($\lambda$y.z) (($\lambda$x y.x) z))
+    
+    $\rightarrow_{\beta}$ ($\lambda$z.($\lambda$y.z) ($\lambda$y.z)))
+    
+    $\rightarrow_{\beta}$ ($\lambda$z.z) $\equiv$ I
+    
+\end{document}
