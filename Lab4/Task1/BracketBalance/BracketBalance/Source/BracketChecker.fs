@@ -1,28 +1,36 @@
 ﻿module BracketBalanceChecker
 
-open Stack
+/// Provides generic  method to check bracket balance in an expression
+let checkGeneric bracketPairs =
 
-// Provides generic  method to check bracket balance in an expression
-let checkGeneric (opening, closing, equals) =
+    let isOpening bracket =
+        bracketPairs |> List.unzip |> fst |> List.contains bracket
 
-    let rec checkCharListRec (stack : CharStack) = function
+    let isClosing bracket =
+        bracketPairs |> List.unzip |> snd |> List.contains bracket
+
+    let isPair left right =
+        bracketPairs |> List.contains (left, right)
+
+    let rec checkExpressionRec (list : list<'a>) = function
         | [] ->
-            stack = Empty
+            list.IsEmpty
         | h :: t ->
-            if (equals h opening) then
-                checkCharListRec (stack.Push h) t
-            elif (equals h closing) then
-                if not (stack = Empty) then
-                    if (equals stack.Top opening) then
-                        checkCharListRec (stack.Pop) t
+            if (isOpening h) then
+                checkExpressionRec (h :: list) t
+            elif (isClosing h) then
+                match list with
+                | [] ->
+                    false
+                | top :: tail ->
+                    if (isPair top h) then
+                        checkExpressionRec tail t
                     else
                         false
-                else
-                    false
             else
-                checkCharListRec stack t
+                checkExpressionRec list t
 
-    let checkString expression =
-        checkCharListRec Empty (List.ofSeq expression)
+    let checkExpression expression =
+        checkExpressionRec [] (List.ofSeq expression)
 
-    checkString
+    checkExpression

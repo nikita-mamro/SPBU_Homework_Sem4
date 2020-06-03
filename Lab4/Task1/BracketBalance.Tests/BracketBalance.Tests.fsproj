@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Compile Include="BracketBalanceTest.fs" />
-    <Compile Include="StackTest.fs" />
   </ItemGroup>
 
   <ItemGroup>
