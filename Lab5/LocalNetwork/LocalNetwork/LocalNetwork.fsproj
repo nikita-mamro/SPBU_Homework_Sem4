@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Interfaces\IOperatingSystem.fs" />
     <Compile Include="Models\OperatingSystem.fs" />
     <Compile Include="Models\Computer.fs" />
     <Compile Include="LocalNetwork.fs" />

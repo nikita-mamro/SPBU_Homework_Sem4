@@ -19,19 +19,19 @@ let getBoolMatrix (m : list<list<int>>) = m |> List.map (fun list -> (list |> Li
 let overvulnerableComputers () =
     [
         [
-        new Computer(Guid.NewGuid(), overvulnerableOS(), false);
-        new Computer(Guid.NewGuid(), overvulnerableOS(), false);
-        new Computer(Guid.NewGuid(), overvulnerableOS(), false);
-        new Computer(Guid.NewGuid(), overvulnerableOS(), false);
-        new Computer(Guid.NewGuid(), overvulnerableOS(), false)
+        Computer(overvulnerableOS(), true);
+        Computer(overvulnerableOS(), false);
+        Computer(overvulnerableOS(), false);
+        Computer(overvulnerableOS(), false);
+        Computer(overvulnerableOS(), false)
         ]
     ] |> Seq.map (fun (computers) -> TestCaseData(computers))
 
 let invulnerableComputers () =
     [
         [
-            new Computer(Guid.NewGuid(), invurnelableOS(), false);
-            new Computer(Guid.NewGuid(), invurnelableOS(), false);
+            Computer(invurnelableOS(), false);
+            Computer(invurnelableOS(), false);
         ]
     ] |> Seq.map (fun (computers) -> TestCaseData(computers))
 
@@ -45,8 +45,18 @@ let ``Network should throw exception having not square matrix`` (computers) =
 
 [<TestCaseSource("overvulnerableComputers")>]
 let ``If probability is 1 infection should behave like bfs`` () =
+    // TODO
     0 |> should equal 1
 
 [<TestCaseSource("invulnerableComputers")>]
 let ``If probability is 0 infection should not happen`` () =
+    // TODO
+    0 |> should equal 1
+
+/// Computer can be infected only if it's connected with infected one,
+/// so if there're no infected computers, there're no infections
+[<TestCaseSource("invulnerableComputers")>]
+let ``If there're no infected computers infection should not happen`` () =
+    let computers = [Computer(OS(0.5), false); Computer(OS(0.5), false)]
+
     0 |> should equal 1

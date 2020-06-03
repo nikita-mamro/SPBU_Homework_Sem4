@@ -32,8 +32,14 @@ type Network (computers: list<Computer>, matrix: list<list<bool>>) =
     member this.Infect () =
         0
 
+    /// Performs certain amount of iterations, starting with certain infected computer
+    member this.StartInfection iterationsCount =
+        for _ in 1 .. iterationsCount do
+            this.Infect()
+            this.PrintReport()
+
     /// Prints info about computers in console
     member this.PrintReport () =
         _computers |>
-        List.iter (fun item -> printfn "id:%A\nOS:%A\nIs infected:%A\n" item.Id item.OS item.IsInfected)
+        List.iter (fun item -> printfn "id: %A\nInfection probability: %A\nIs infected: %A\n" item.Id item.OS.InfectionProbability item.IsInfected)
 

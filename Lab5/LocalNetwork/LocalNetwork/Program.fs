@@ -15,11 +15,11 @@ let main args =
 
     let cs =
         [
-        new Computer(Guid.NewGuid(), WindowsOS, false)
-        new Computer(Guid.NewGuid(), MacOS, false)
-        new Computer(Guid.NewGuid(), WindowsOS, false)
-        new Computer(Guid.NewGuid(), LinuxOS, false)
-        new Computer(Guid.NewGuid(), WindowsOS, false)
+        new Computer(WindowsOS, false)
+        new Computer(MacOS, false)
+        new Computer(WindowsOS, false)
+        new Computer(LinuxOS, false)
+        new Computer(WindowsOS, false)
         ]
 
     let m =
@@ -33,17 +33,9 @@ let main args =
 
     let matr = m |> List.map (fun list -> (list |> List.map (fun x -> Convert.ToBoolean(x))))
 
-    new Network(cs, matr) |> ignore
+    let n = Network(cs, matr)
 
-
-    let q = new Queue<int>()
-    q.Enqueue(2)
-    q.Enqueue(3)
-    q.Enqueue(4)
-
-    printfn "%A" <| q.Dequeue()
-    printfn "%A" <| q.Dequeue()
-    printfn "%A" <| q.Dequeue()
+    n.PrintReport()
 
 
     0

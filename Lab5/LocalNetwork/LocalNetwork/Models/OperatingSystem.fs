@@ -1,7 +1,5 @@
 ﻿module OperatingSystem
 
-open IOperatingSystem
-
 open System
 
 type OS (infectionProbability : float) =
