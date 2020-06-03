@@ -11,4 +11,4 @@ build_script:
   - msbuild %solution_path%
 
 test_script:
-  - dotnet test --test-adapter-path:. --logger:Appveyor Lab5\LocalNetwork.Tests\LocalNetwork.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab5\LocalNetwork\LocalNetwork.Tests\LocalNetwork.Tests.fsproj
