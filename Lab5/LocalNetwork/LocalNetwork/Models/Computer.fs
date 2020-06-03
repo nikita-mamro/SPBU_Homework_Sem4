@@ -1,13 +1,11 @@
 ﻿module Computer
 
-open System
-
 open OperatingSystem
 
-type Computer (os : OS, isInfected) =
+type Computer (id, os : OS, isInfected : bool) =
     let mutable _isInfected = isInfected
 
-    member this.Id = Guid.NewGuid()
+    member this.Id = id
     member this.OS = os
     member this.IsInfected
         with get () = _isInfected

@@ -9,7 +9,6 @@
     <Compile Include="Models\OperatingSystem.fs" />
     <Compile Include="Models\Computer.fs" />
     <Compile Include="LocalNetwork.fs" />
-    <Compile Include="Program.fs" />
   </ItemGroup>
 
 </Project>
