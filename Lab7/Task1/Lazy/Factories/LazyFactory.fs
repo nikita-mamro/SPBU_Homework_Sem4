@@ -1,8 +1,7 @@
 ﻿module LazyFactory
 
+/// Factory generating lazy objects
 type LazyFactory<'a> () =
-    let mutable a = false
-
     member this.CreateLazy supplier =
         SingleThreadLazy.Lazy(supplier)
 

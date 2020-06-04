@@ -11,15 +11,14 @@ type Lazy<'a> (supplier) =
     let lockObj = Object()
     let mutable obj = None
 
-    [<VolatileField>]
-    let mutable isCalculated = false
-
     interface ILazy<'a> with
         member this.Get () =
-            if not isCalculated then
+            match obj with
+            | None ->
                 lock lockObj (fun () ->
-                    if not isCalculated then
+                    if obj.IsNone then
                         obj <- Some (supplier())
-                        isCalculated <- true
                         )
-            obj.Value
+                obj.Value
+            | Some value ->
+                value

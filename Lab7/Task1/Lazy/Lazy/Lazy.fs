@@ -11,8 +11,9 @@ type Lazy<'a> (supplier) =
 
     interface ILazy<'a> with
         member this.Get () =
-            if not isCalculated then
+            match obj with
+            | None ->
                 obj <- Some (supplier())
-                isCalculated <- true
-
-            obj.Value
+                obj.Value
+            | Some value ->
+                value
