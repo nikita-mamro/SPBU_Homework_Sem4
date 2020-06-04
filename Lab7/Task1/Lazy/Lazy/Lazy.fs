@@ -7,7 +7,6 @@ open Interfaces
 /// correct behaviour in multithread mode
 type Lazy<'a> (supplier) =
     let mutable obj = None
-    let mutable isCalculated = false
 
     interface ILazy<'a> with
         member this.Get () =

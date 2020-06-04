@@ -1,8 +1,8 @@
 ﻿module ThreadSafeLazy
 
-open System
-
 open Interfaces
+
+open System
 
 /// Type implementing ILazy interface
 /// This implementation guarantees

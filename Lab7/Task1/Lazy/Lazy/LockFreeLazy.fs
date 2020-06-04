@@ -1,6 +1,7 @@
 ﻿module LockFreeLazy
 
 open Interfaces
+
 open System.Threading
 
 /// Type implementing ILazy interface
@@ -12,11 +13,7 @@ type Lazy<'a> (supplier) =
 
     interface ILazy<'a> with
         member this.Get () =
-            match obj with
-            | None ->
-                while obj.IsNone do
-                    let desiredVal = Some (supplier())
-                    Interlocked.CompareExchange(ref obj, desiredVal, None) |> ignore
-                obj.Value
-            | Some value ->
-                value
+            while obj.IsNone do
+                let desiredVal = Some (supplier())
+                Interlocked.CompareExchange(ref obj, desiredVal, None) |> ignore
+            obj.Value

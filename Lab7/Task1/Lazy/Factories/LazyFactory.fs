@@ -1,12 +1,14 @@
 ﻿module LazyFactory
 
+open Interfaces
+
 /// Factory generating lazy objects
-type LazyFactory<'a> () =
-    member this.CreateLazy supplier =
-        SingleThreadLazy.Lazy(supplier)
+type LazyFactory<'a> =
+    static member CreateLazy supplier =
+        SingleThreadLazy.Lazy(supplier) :> ILazy<'a>
 
-    member this.CreateThreadSafeLazy supplier =
-        ThreadSafeLazy.Lazy(supplier)
+    static member CreateThreadSafeLazy supplier =
+        ThreadSafeLazy.Lazy(supplier) :> ILazy<'a>
 
-    member this.CreateLockFreeLazy supplier =
-        LockFreeLazy.Lazy(supplier)
+    static member CreateLockFreeLazy supplier =
+        LockFreeLazy.Lazy(supplier) :> ILazy<'a>
