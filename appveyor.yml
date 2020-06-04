@@ -2,7 +2,7 @@ image: Visual Studio 2019
 
 environment:
   matrix:
-  - solution_path: Lab7\Task2\WebScraper\WebScraper.sln
+  - solution_path: Lab7\Task2\WebScraper.sln
 
 before_build:
  - nuget restore %solution_path%
