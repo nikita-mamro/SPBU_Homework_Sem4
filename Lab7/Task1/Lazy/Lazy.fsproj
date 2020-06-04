@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Interfaces\ILazy.fs" />
+    <Compile Include="Lazy\LockFreeLazy.fs" />
+    <Compile Include="Lazy\ThreadSafeLazy.fs" />
+    <Compile Include="Lazy\Lazy.fs" />
+    <Compile Include="Factories\LazyFactory.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
+    <PackageReference Include="FsUnit" Version="3.8.1" />
+  </ItemGroup>
+
+</Project>
