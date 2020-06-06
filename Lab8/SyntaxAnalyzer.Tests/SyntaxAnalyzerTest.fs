@@ -3,6 +3,9 @@
 open NUnit.Framework
 open FsUnit
 
+open Interpreter
+open LambdaParser
+
 [<Test>]
 let ``dummy test`` () =
-    1 |> should equal 2
+    Parser.Parse "\x y z.x y" |> should equal (Abstraction('x', Abstraction('y', Abstraction('z', Application(Variable('x'), Variable('y'))))))
