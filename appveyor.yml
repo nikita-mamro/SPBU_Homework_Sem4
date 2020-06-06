@@ -18,6 +18,7 @@ environment:
   - solution_path: Lab4\Task3\PhoneBook\PhoneBook.sln
   - solution_path: Lab6\Task1\WorkflowCalculator\WorkflowCalculator.sln
   - solution_path: Lab6\Task2\WorkflowStringCalculator\WorkflowStringCalculator.sln
+  - solution_path: Test\Test\Test.sln
   - solution_path: Test\PriorityQueue\PriorityQueue.sln
 
 before_build:
@@ -43,4 +44,5 @@ test_script:
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task3\PhoneBook.Tests\PhoneBook.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab6\Task1\WorkflowCalculator.Tests\WorkflowCalculator.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Lab6\Task2\WorkflowStringCalculator.Tests\WorkflowStringCalculator.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Test\Test.Tests\Test.Tests.fsproj
   - dotnet test --test-adapter-path:. --logger:Appveyor Test\PriorityQueue.Tests\PriorityQueue.Tests.fsproj
