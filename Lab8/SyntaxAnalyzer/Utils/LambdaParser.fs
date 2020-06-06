@@ -43,7 +43,7 @@ type Parser =
             charParser |>> Variable
 
         /// Application parsing logic
-        let appParParser =
+        let appParenthesesParser =
             pipe5
                 (skipChar '(')
                 varParser
@@ -54,7 +54,7 @@ type Parser =
                     Application (f, arg))
 
         /// Parses applications like: A B (C D)  (at least should parse)
-        let appNoParParser =
+        let appNoParenthesesParser =
             let arrCharParser =
                 pipe2
                     ws
@@ -108,7 +108,7 @@ type Parser =
                         try
                             Variable ((char)res.Head)
                         with _ ->
-                            match run appParParser res.Head with
+                            match run appParenthesesParser res.Head with
                             | Success (res, _, _) ->
                                 res
                             | _ ->
@@ -148,7 +148,7 @@ type Parser =
             eRef := choice
                 [
                     absParser
-                    appNoParParser
+                    appNoParenthesesParser
                 ]
 
         /// Parses lambda term and returns needed value of 'LambdaTerm' type from Interpreter project
