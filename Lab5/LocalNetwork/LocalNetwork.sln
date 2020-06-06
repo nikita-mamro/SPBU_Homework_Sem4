@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "LocalNetwork", "LocalNetwork\LocalNetwork.fsproj", "{FAA1D55A-2189-4B3A-AE6F-E80AE930B2CD}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "LocalNetwork.Tests", "LocalNetwork.Tests\LocalNetwork.Tests.fsproj", "{65C3513D-AD2C-4102-9EDE-AD2AB4466BF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA1D55A-2189-4B3A-AE6F-E80AE930B2CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA1D55A-2189-4B3A-AE6F-E80AE930B2CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA1D55A-2189-4B3A-AE6F-E80AE930B2CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA1D55A-2189-4B3A-AE6F-E80AE930B2CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C3513D-AD2C-4102-9EDE-AD2AB4466BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C3513D-AD2C-4102-9EDE-AD2AB4466BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C3513D-AD2C-4102-9EDE-AD2AB4466BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C3513D-AD2C-4102-9EDE-AD2AB4466BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F3F3385-A546-4C8A-AAEC-438A47913FE9}
+	EndGlobalSection
+EndGlobal
