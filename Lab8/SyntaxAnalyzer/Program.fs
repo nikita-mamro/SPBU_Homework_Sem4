@@ -28,11 +28,21 @@ let appNoParParser =
         let rec listToStr = function
             | [] -> ""
             | [x] -> x.ToString()
-            | h :: t -> h.ToString() + " " + (listToStr t)
+            | h :: t -> "(" + h.ToString() + " " + (listToStr t) + ")"
 
         match list with
         | [] -> []
         | h :: t -> (listToStr h) :: (formatRes t)
+
+    let rec getFinalRes (list: list<string>) =
+        match list with
+        | [] -> []
+        | h :: t ->
+            match t with
+            | [] -> list
+            | [x] -> list
+            | head :: tail ->
+                (h + " " + head) :: getFinalRes tail
 
     let arrCharParser =
         pipe2
@@ -49,8 +59,23 @@ let appNoParParser =
     pipe2
         betweenParser
         ws
-        (fun parser _ ->
-            Variable 'x')
+        (fun parsed _ ->
+            let res = parsed |> formatRes |> getFinalRes
+
+            // ex: x z (y z)
+            // res: [x z;(y z)]
+
+            // here enters with zero length sometimes
+
+            if (res.Length = 1) then
+                Variable ((char)res.Head)
+            else
+                match (run exprParser res.Head, run exprParser res.Tail.Head) with
+                | (Success (left, _, _), Success (right, _, _)) ->
+                    Application (left, right)
+                | _ ->
+                    failwith "Error"
+            )
 
 let appParParser =
     pipe5
@@ -84,9 +109,10 @@ let absParser =
 let init () =
     eRef := choice
         [
-            varParser
-            appParParser
             absParser
+            appParParser
+            appNoParParser
+            varParser
         ]
 
 let parse str =
@@ -100,40 +126,8 @@ let parse str =
 
 [<EntryPoint>]
 let main argv =
-    let testInput = "\x y.(x y)"
+    let testInput = "\x y z.x z (y z)"
 
     printfn "%A" <| parse testInput
-
-    let x = "(a b) c d"
-
-    let rec formatRes list =
-        let rec listToStr = function
-            | [] -> ""
-            | [x] -> x.ToString()
-            | h :: t -> h.ToString() + " " + (listToStr t)
-
-        match list with
-        | [] -> []
-        | h :: t -> (listToStr h) :: (formatRes t)
-
-    let newCharParser =
-        pipe2
-            ws
-            charParser
-            (fun _ c -> [c])
-
-    let rec multiCharParser =
-        between (str "(" .>> ws) (str ")") (sepBy ((satisfy (fun c -> c <> '\\' && c <> ' ')) <|> charParser) (str " "))
-
-    let betweenParser =
-        between (ws) (ws) (sepBy (newCharParser <|> multiCharParser) (str " "))
-
-    let btwn = choice [betweenParser]
-
-    match run btwn x with
-    | Success (res, _, _) ->
-        printfn "%A" <| formatRes res
-    | Failure (e, _, _) ->
-        failwith e
 
     0 // return an integer exit code
