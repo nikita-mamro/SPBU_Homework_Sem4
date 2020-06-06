@@ -2,11 +2,12 @@
 
 open OperatingSystem
 
+/// Class describing computer
 type Computer (id, os : OS, isInfected : bool) =
-    let mutable _isInfected = isInfected
+    let mutable isInfected = isInfected
 
     member this.Id = id
     member this.OS = os
     member this.IsInfected
-        with get () = _isInfected
-        and set (value) = _isInfected <- value
+        with get () = isInfected
+        and set (value) = isInfected <- value

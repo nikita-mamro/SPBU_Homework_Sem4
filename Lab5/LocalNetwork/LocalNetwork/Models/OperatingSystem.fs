@@ -2,6 +2,7 @@
 
 open System
 
+/// Class describing operation system with certain chance of infection
 type OS (infectionProbability : float) =
     do
         if infectionProbability < 0.0 || (infectionProbability - 1.0) > (float)Single.Epsilon then
