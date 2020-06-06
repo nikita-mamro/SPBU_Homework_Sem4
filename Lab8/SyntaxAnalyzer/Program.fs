@@ -2,7 +2,7 @@
 
 [<EntryPoint>]
 let main argv =
-    let testInput = "\x y z.x z y"
+    let testInput = "\x y z.x z (y z)"
 
     printfn "%A" <| Parser.Parse testInput
 

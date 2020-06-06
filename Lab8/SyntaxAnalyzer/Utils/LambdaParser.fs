@@ -7,7 +7,7 @@ open Interpreter
 
 /// Parses expression to lambda term, should support naming
 ///
-/// Example:
+/// Example (not implemented yet):
 ///
 /// Input:
 /// let K = \x y. x
@@ -17,8 +17,7 @@ open Interpreter
 ///
 /// Currently available: pass sth like "\x y z.x y" -> res Abs(x,Abs(y,Abs(z, App(var x, var y))))
 /// Not abvailable:
-///     correct work without bugs, so it crashes usually
-///     parsing lets
+///     "let" parsing logic
 type Parser =
     static member Parse expression =
         let exprParser, eRef = createParserForwardedToRef<LambdaTerm, unit>()
@@ -27,44 +26,35 @@ type Parser =
         let str s = pstring s
         let ws = spaces
 
+        /// Map to store named variables when parsing is implemented
         let mutable map = Map.empty
 
+        /// Proceeds input like "let X = *some lambda*" and stores X's lambda term in variables map
         let letParser =
             map <- map.Add('X', Variable 'x')
-            () // todo
+            () // TODO
+
+        /// Parsers for characters
 
         let charParser =
             satisfy (fun c -> Char.IsLetterOrDigit(c) && c <> '\\' && c <> ' ')
 
-        let nameParser =
-            charParser // just didn't change it after making it the same as charParser bruh
-
         let varParser =
-            nameParser |>> Variable // not sure if it's needed
+            charParser |>> Variable
+
+        /// Application parsing logic
+        let appParParser =
+            pipe5
+                (skipChar '(')
+                varParser
+                (spaces)
+                varParser
+                (skipChar ')')
+                (fun _ f _ arg _ ->
+                    Application (f, arg))
 
         /// Parses applications like: A B (C D)  (at least should parse)
         let appNoParParser =
-            /// Some utils, mb they are bugged
-            let rec formatRes list =
-                let rec listToStr = function
-                    | [] -> ""
-                    | [x] -> x.ToString()
-                    | h :: t -> "(" + h.ToString() + " " + (listToStr t) + ")"
-
-                match list with
-                | [] -> []
-                | h :: t -> (listToStr h) :: (formatRes t)
-
-            let rec getFinalRes (list: list<string>) =
-                match list with
-                | [] -> []
-                | h :: t ->
-                    match t with
-                    | [] -> list
-                    | [x] -> list
-                    | head :: tail ->
-                        (h + " " + head) :: getFinalRes tail
-
             let arrCharParser =
                 pipe2
                     ws
@@ -77,20 +67,52 @@ type Parser =
             let betweenParser =
                 between (ws) (ws) (sepBy (arrCharParser <|> multiCharParser) (str " "))
 
+            /// Some utils, might have been a mistake to make them
+            /// instead of looking for FParsec alternatives
+
+            /// Gets list after running betweenParser and formats it to needed list of strings
+            let rec formatParserRes list =
+                let rec listToStr = function
+                    | [] -> ""
+                    | [x] -> x.ToString()
+                    | h :: t -> "(" + h.ToString() + " " + (listToStr t) + ")"
+
+                match list with
+                | [] -> []
+                | h :: t -> (listToStr h) :: (formatParserRes t)
+
+            /// Gets list from formatRes and moves everything apart from last element to the begining
+            /// That's how we use it to create application then
+            let rec getAbstractionPair (list: list<string>) =
+                match list with
+                | [] -> []
+                | h :: t ->
+                    match t with
+                    | [] -> list
+                    | [x] -> list
+                    | head :: tail ->
+                        (h + " " + head) :: getAbstractionPair tail
+
             pipe2
                 betweenParser
                 ws
                 (fun parsed _ ->
-                    let res = parsed |> formatRes |> getFinalRes
+                    let res = parsed |> formatParserRes |> getAbstractionPair
 
-                    // ex: "x z (y z)"
+                    // Example:
+                    // input: "x z (y z)"
                     // res: ["x z";"(y z)"]
                     // then we should do App(parse("x z"), parse("(y z)"))
 
-                    // bug: here enters with zero length sometimes
-
                     if (res.Length = 1) then
-                        Variable ((char)res.Head)
+                        try
+                            Variable ((char)res.Head)
+                        with _ ->
+                            match run appParParser res.Head with
+                            | Success (res, _, _) ->
+                                res
+                            | _ ->
+                                failwith "Invalid token"
                     else
                         match (run exprParser res.Head, run exprParser res.Tail.Head) with
                         | (Success (left, _, _), Success (right, _, _)) ->
@@ -98,17 +120,9 @@ type Parser =
                         | _ ->
                             failwith "Invalid token"
                     )
+        /// End of application parser
 
-        let appParParser =
-            pipe5
-                (skipChar '(')
-                exprParser
-                (spaces)
-                exprParser
-                (skipChar ')')
-                (fun _ f _ arg _ ->
-                    Application (f, arg))
-
+        ///Abstraction arguments parsing logic
         let namesParser =
             between (str "\\" .>> ws) (str ".") (sepBy charParser (str " "))
 
@@ -127,15 +141,17 @@ type Parser =
                         else
                             Abstraction (list.Head, absRec list.Tail)
                     absRec parameters)
+        /// End of abstraction parser
 
+        /// Initializes the main parser
         let init () =
             eRef := choice
                 [
                     absParser
-                    //appParParser
-                    appNoParParser //this does not work as expected with parentheses (just crashes)
+                    appNoParParser
                 ]
 
+        /// Parses lambda term and returns needed value of 'LambdaTerm' type from Interpreter project
         let parse str =
             init()
             let parser = !eRef .>> eof
