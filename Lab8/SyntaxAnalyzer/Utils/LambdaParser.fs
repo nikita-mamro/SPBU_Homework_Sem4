@@ -5,7 +5,7 @@ open FParsec
 
 open Interpreter
 
-/// Parses expression to lambda term
+/// Parses expression to lambda term, should support naming
 ///
 /// Example:
 ///
@@ -14,30 +14,37 @@ open Interpreter
 /// K K
 /// Output:
 /// Application(Abstraction('x', Abstraction('y', Variable('x'))), Abstraction('x', Abstraction('y', Variable('x'))))
-
+///
+/// Currently available: pass sth like "\x y z.x y" -> res Abs(x,Abs(y,Abs(z, App(var x, var y))))
+/// Not abvailable:
+///     correct work without bugs, so it crashes usually
+///     parsing lets
 type Parser =
     static member Parse expression =
         let exprParser, eRef = createParserForwardedToRef<LambdaTerm, unit>()
 
+        /// Some utils
         let str s = pstring s
         let ws = spaces
 
-        let mutable map = Map.empty.Add(' ',' ')
+        let mutable map = Map.empty
 
         let letParser =
+            map <- map.Add('X', Variable 'x')
             () // todo
 
         let charParser =
             satisfy (fun c -> Char.IsLetterOrDigit(c) && c <> '\\' && c <> ' ')
 
         let nameParser =
-            charParser
+            charParser // just didn't change it after making it the same as charParser bruh
 
         let varParser =
-            nameParser |>> Variable
+            nameParser |>> Variable // not sure if it's needed
 
-        // Parses applications like: A B (C D)
+        /// Parses applications like: A B (C D)  (at least should parse)
         let appNoParParser =
+            /// Some utils, mb they are bugged
             let rec formatRes list =
                 let rec listToStr = function
                     | [] -> ""
@@ -76,10 +83,11 @@ type Parser =
                 (fun parsed _ ->
                     let res = parsed |> formatRes |> getFinalRes
 
-                    // ex: x z (y z)
-                    // res: [x z;(y z)]
+                    // ex: "x z (y z)"
+                    // res: ["x z";"(y z)"]
+                    // then we should do App(parse("x z"), parse("(y z)"))
 
-                    // here enters with zero length sometimes
+                    // bug: here enters with zero length sometimes
 
                     if (res.Length = 1) then
                         Variable ((char)res.Head)
@@ -88,7 +96,7 @@ type Parser =
                         | (Success (left, _, _), Success (right, _, _)) ->
                             Application (left, right)
                         | _ ->
-                            failwith "Error"
+                            failwith "Invalid token"
                     )
 
         let appParParser =
@@ -124,8 +132,8 @@ type Parser =
             eRef := choice
                 [
                     absParser
-                    appParParser
-                    appNoParParser //this does not work as expected with parentheses
+                    //appParParser
+                    appNoParParser //this does not work as expected with parentheses (just crashes)
                 ]
 
         let parse str =
