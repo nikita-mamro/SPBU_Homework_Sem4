@@ -83,7 +83,7 @@ type Parser =
 
             /// Gets list from formatRes and moves everything apart from last element to the begining
             /// That's how we use it to create application then
-            let rec getAbstractionPair (list: list<string>) =
+            let rec getApplicationPair (list: list<string>) =
                 match list with
                 | [] -> []
                 | h :: t ->
@@ -91,13 +91,13 @@ type Parser =
                     | [] -> list
                     | [x] -> list
                     | head :: tail ->
-                        (h + " " + head) :: getAbstractionPair tail
+                        (h + " " + head) :: getApplicationPair tail
 
             pipe2
                 betweenParser
                 ws
                 (fun parsed _ ->
-                    let res = parsed |> formatParserRes |> getAbstractionPair
+                    let res = parsed |> formatParserRes |> getApplicationPair
 
                     // Example:
                     // input: "x z (y z)"
