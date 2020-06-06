@@ -2,7 +2,22 @@ image: Visual Studio 2019
 
 environment:
   matrix:
+  - solution_path: Lab1\Task1\Factorial\Factorial.sln
+  - solution_path: Lab1\Task2\Fibonacci\Fibonacci.sln
+  - solution_path: Lab1\Task3\ReverseList\ReverseList.sln
+  - solution_path: Lab1\Task4\CreateList\CreateList.sln
+  - solution_path: Lab1\Task5\FirstEntry\FirstEntry.sln
+  - solution_path: Lab2\Task1\EvenCount\EvenCount.sln
+  - solution_path: Lab2\Task2\BTreeMap\BTreeMap.sln
+  - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln
+  - solution_path: Lab2\Task3\ExpressionTree\ExpressionTree.sln
+  - solution_path: Lab2\Task4\PrimeSequence\PrimeSequence.sln
+  - solution_path: Lab3\Task3\LambdaInterpreter\LambdaInterpreter.sln
   - solution_path: Lab4\Task1\BracketBalance\BracketBalance.sln
+  - solution_path: Lab4\Task2\PointFree\PointFree.sln
+  - solution_path: Lab4\Task3\PhoneBook\PhoneBook.sln
+  - solution_path: Lab6\Task2\WorkflowStringCalculator\WorkflowStringCalculator.sln
+  - solution_path: Test\PriorityQueue\PriorityQueue.sln
 
 before_build:
  - nuget restore %solution_path%
@@ -11,4 +26,19 @@ build_script:
   - msbuild %solution_path%
 
 test_script:
-   dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task1\BracketBalance.Tests\BracketBalance.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task1\Factorial.Tests\Factorial.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task2\Fibonacci.Tests\Fibonacci.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task3\ReverseList.Tests\ReverseList.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task4\CreateList.Tests\CreateList.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab1\Task5\FirstEntry.Tests\FirstEntry.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task1\EvenCount.Tests\EvenCount.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task2\BTreeMap.Tests\BTreeMap.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task4\PrimeSequence.Tests\PrimeSequence.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task3\ExpressionTree.Tests\ExpressionTree.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab2\Task4\PrimeSequence.Tests\PrimeSequence.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task1\BracketBalance.Tests\BracketBalance.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab3\Task3\LambdaInterpreter.Tests\LambdaInterpreter.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task2\PointFree.Tests\PointFree.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab4\Task3\PhoneBook.Tests\PhoneBook.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Lab6\Task2\WorkflowStringCalculator.Tests\WorkflowStringCalculator.Tests.fsproj
+  - dotnet test --test-adapter-path:. --logger:Appveyor Test\PriorityQueue.Tests\PriorityQueue.Tests.fsproj
