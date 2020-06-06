@@ -18,4 +18,19 @@ type Parser =
     static member Parse expression =
         let e, eRef = createParserForwardedToRef<LambdaTerm, unit>()
 
+        let init () =
+            eRef := choice
+                [
+
+                ]
+
+        init()
+        let parser = !eRef .>> eof
+
+        match run parser expression with
+        | Success (res, _, _) ->
+            res |> ignore // TODO REMOVE ignore
+        | Failure (e, _, _) ->
+            failwith e |> ignore // TODO REMOVE ignore
+
         Variable 'x'
